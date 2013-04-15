@@ -40,8 +40,8 @@ while [ 1 ]
 do disclaimer
 	read CHOICE
 	case "$CHOICE" in
-        "y")
-            clear
+		"y")
+			clear
 			echo "Updating APT package indexes."
 			sleep 2
 			apt-get update -q=3
@@ -89,7 +89,7 @@ do disclaimer
 			clear
 			break
 		;;
-		"n")     
+		"n")
 			exit
 		;; 
 	esac
@@ -105,7 +105,8 @@ while [ 1 ]
 do startservices
 	read CHOICE
 	case "$CHOICE" in
-        "y")
+		"y")
+			clear
 			service sabnzbd start
 			service sickbeard start
 			service couchpotato start
@@ -115,7 +116,7 @@ do startservices
 			clear
 			break
 		;;
-		"n")     
+		"n")
 		;; 
 	esac
 done
