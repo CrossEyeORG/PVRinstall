@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 
 echo "PVRinstall script will install SABnzbd, SickBeard, CouchPotato and headphones."
 echo "Copyright (C) 2013  CrossEye"
