@@ -95,6 +95,54 @@ do disclaimer
 	esac
 done         
 
+initinstall ()
+{
+clear
+echo "Would you like the init scripts installed?"
+echo "y=YES n=NO"
+}
+while [ 1 ]
+do initinstall
+	read CHOICE
+	case "$CHOICE" in
+		"y")
+		;;
+		"n")
+			echo "Installation Complete without the init scripts"
+			exit
+		;; 
+	esac
+done	
+
+initconfig ()
+{
+clear
+echo "Which username do you want each new service to run with?"
+}
+while [ 1 ]
+do initconfig
+	read CHANGEME
+	echo "Configuring specified username."
+	sed "$CHANGEME" /opt/pvrinitscripts/SickBeard.sh > /opt/pvrinitscripts/SickBeard.sh
+	sed "$CHANGEME" /opt/pvrinitscripts/CouchPotato.sh > /opt/pvrinitscripts/CouchPotato.sh
+	sed "$CHANGEME" /opt/pvrinitscripts/Headphones.sh > /opt/pvrinitscripts/Headphones.sh
+	echo "Copying configured init scripts to /etc/init.d/."
+	cp /opt/pvrinitscripts/SABnzbd.sh /etc/init.d/sabnzbd
+	cp /opt/pvrinitscripts/SickBeard.sh /etc/init.d/sickbeard
+	cp /opt/pvrinitscripts/CouchPotato.sh /etc/init.d/couchpotato
+	cp /opt/pvrinitscripts/Headphones.sh /etc/init.d/headphones
+	echo "Making the new init scripts executable."
+	chmod +x /etc/init.d/sabnzbd
+	chmod +x /etc/init.d/sickbeard
+	chmod +x /etc/init.d/couchpotato
+	chmod +x /etc/init.d/headphones
+	echo "Updating the systems services list."
+	update-rc.d sabnzbd defaults
+	update-rc.d sickbeard defaults
+	update-rc.d couchpotato defaults
+	update-rc.d headphones defaults
+done	
+
 startservices ()
 {
 clear
