@@ -2,22 +2,21 @@
 
 echo "PVRinstall script will install SABnzbd, SickBeard, CouchPotato and headphones."
 echo "Copyright (C) 2013  CrossEye"
-
+echo ""
 echo "This program is free software: you can redistribute it and/or modify"
 echo "it under the terms of the GNU General Public License as published by"
 echo "the Free Software Foundation, either version 3 of the License, or"
 echo "(at your option) any later version."
-
+echo ""
 echo "This program is distributed in the hope that it will be useful,"
 echo "but WITHOUT ANY WARRANTY; without even the implied warranty of"
 echo "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
 echo "GNU General Public License for more details."
-
+echo ""
 echo "You should have received a copy of the GNU General Public License"
 echo "along with this program.  If not, see <http://www.gnu.org/licenses/>"
-
+echo ""
 sleep 8
-clear
 
 rootcheck ()
 {
@@ -90,6 +89,7 @@ do disclaimer
 			break
 		;;
 		"n")
+			echo "Installation abouted, nothing has been install."
 			exit
 		;; 
 	esac
@@ -106,6 +106,7 @@ do initinstall
 	read CHOICE
 	case "$CHOICE" in
 		"y")
+			break
 		;;
 		"n")
 			echo "Installation Complete without the init scripts"
@@ -121,26 +122,31 @@ echo "Which username do you want each new service to run with?"
 }
 while [ 1 ]
 do initconfig
-	read CHANGEME
+	read USRNAME
 	echo "Configuring specified username."
-	sed "$CHANGEME" /opt/pvrinitscripts/SickBeard.sh > /opt/pvrinitscripts/SickBeard.sh
-	sed "$CHANGEME" /opt/pvrinitscripts/CouchPotato.sh > /opt/pvrinitscripts/CouchPotato.sh
-	sed "$CHANGEME" /opt/pvrinitscripts/Headphones.sh > /opt/pvrinitscripts/Headphones.sh
+	sleep 2
+	sed -i -e "s/CHANGEME/$USRNAME/g" /opt/pvrinitscripts/SickBeard.sh
+	sed -i -e "s/CHANGEME/$USRNAME/g" /opt/pvrinitscripts/CouchPotato.sh
+	sed -i -e "s/CHANGEME/$USRNAME/g" /opt/pvrinitscripts/Headphones.sh
 	echo "Copying configured init scripts to /etc/init.d/."
+	sleep 2
 	cp /opt/pvrinitscripts/SABnzbd.sh /etc/init.d/sabnzbd
 	cp /opt/pvrinitscripts/SickBeard.sh /etc/init.d/sickbeard
 	cp /opt/pvrinitscripts/CouchPotato.sh /etc/init.d/couchpotato
 	cp /opt/pvrinitscripts/Headphones.sh /etc/init.d/headphones
 	echo "Making the new init scripts executable."
+	sleep 2
 	chmod +x /etc/init.d/sabnzbd
 	chmod +x /etc/init.d/sickbeard
 	chmod +x /etc/init.d/couchpotato
 	chmod +x /etc/init.d/headphones
 	echo "Updating the systems services list."
+	sleep 2
 	update-rc.d sabnzbd defaults
 	update-rc.d sickbeard defaults
 	update-rc.d couchpotato defaults
 	update-rc.d headphones defaults
+	break
 done	
 
 startservices ()
@@ -161,13 +167,15 @@ do startservices
 			service headphones start
 			echo "Services should now be started."
 			sleep 5
-			clear
 			break
 		;;
 		"n")
+			echo "Installation complete but services have not been started."
+			exit
 		;; 
 	esac
 done
 
+clear
 echo "Installation Complete."
 exit 100
