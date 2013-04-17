@@ -1,7 +1,5 @@
 ﻿#!/bin/bash
 
-rootcheck ()
-{
 echo "Checking PVRinstall.sh was ran with root."
 if [[ $EUID -ne 0 ]]; then
 	echo "This script must be run as root" 1>&2
@@ -9,7 +7,6 @@ if [[ $EUID -ne 0 ]]; then
 fi
 echo "Verified root"
 sleep 2
-}
 
 disclaimer ()
 {
