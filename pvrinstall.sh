@@ -1,5 +1,19 @@
 ﻿#!/bin/bash
 
+rootcheck ()
+{
+echo "Checking PVRinstall.sh was ran with root."
+if [[ $EUID -ne 0 ]]; then
+	echo "This script must be run as root" 1>&2
+	exit 1
+fi
+echo "Verified root"
+sleep 2
+}
+
+disclaimer ()
+{
+clear
 echo "PVRinstall script will install SABnzbd, SickBeard, CouchPotato and headphones."
 echo "Copyright (C) 2013  CrossEye"
 echo ""
@@ -16,22 +30,6 @@ echo ""
 echo "You should have received a copy of the GNU General Public License"
 echo "along with this program.  If not, see <http://www.gnu.org/licenses/>"
 echo ""
-sleep 8
-
-rootcheck ()
-{
-echo "Checking PVRinstall.sh was ran with root."
-if [[ $EUID -ne 0 ]]; then
-	echo "This script must be run as root" 1>&2
-	exit 1
-fi
-echo "Verified root"
-sleep 2
-}
-
-disclaimer ()
-{
-clear
 echo "Do you Agree to the GNU License and to the warrenty?"
 echo "y=YES n=NO"
 }
