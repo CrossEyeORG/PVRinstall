@@ -15,7 +15,7 @@ Just download the script to anywhere on your system, make it executable and run 
 	</li>
 	<li>
 		<code>
-			wget -O ~/pvrinstall.sh https://github.com/CrossEyeORG/PVRinstall/blob/master/pvrinstall.sh
+			wget -O ~/pvrinstall.sh https://raw.github.com/CrossEyeORG/PVRinstall/master/pvrinstall.sh
 		</code>
 	</li>
 	<li>
