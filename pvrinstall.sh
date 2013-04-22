@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 
 echo "Checking PVRinstall.sh was ran with root."
 if [[ $EUID -ne 0 ]]; then
