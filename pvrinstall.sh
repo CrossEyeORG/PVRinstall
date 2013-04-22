@@ -93,7 +93,7 @@ done
 initinstall ()
 {
 clear
-echo "Would you like the init scripts installed?"
+echo "Would you like the init scripts to be installed?"
 echo "y=YES n=NO"
 }
 while [ 1 ]
@@ -104,7 +104,7 @@ do initinstall
 			break
 		;;
 		"n")
-			echo "Installation Complete without the init scripts"
+			echo "Installation Complete without the init scripts installed."
 			exit
 		;; 
 	esac
@@ -165,7 +165,7 @@ do startservices
 			break
 		;;
 		"n")
-			echo "Installation complete but services have not been started."
+			echo "Installation complete but services have not been started yet."
 			exit
 		;; 
 	esac
