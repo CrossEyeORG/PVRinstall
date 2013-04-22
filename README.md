@@ -1,7 +1,7 @@
 PVRinstall
 ==========
 
-PVRinstall is a simple bash script intended to be used on a Debian system that will install
+PVRinstall is a simple bash script intended to be used on a Debian based system(Ubuntu, Linux Mint, etc) that will install
 SABnzbd, SickBeard, CouchPotato and Headphones from GitHub. It will also configure each
 program as a service with init scripts. During the installation, you'll be prompted for
 which username you want them to run with.
