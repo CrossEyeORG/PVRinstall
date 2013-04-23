@@ -12,7 +12,7 @@ disclaimer ()
 {
 clear
 echo "PVRinstall script will install SABnzbd+, SickBeard, CouchPotato and Headphones."
-echo "Copyright (C) 2013  CrossEye"
+echo "Copyright (C) 2013 CrossEye"
 echo ""
 echo "This program is free software: you can redistribute it and/or modify"
 echo "it under the terms of the GNU General Public License as published by"
@@ -27,11 +27,31 @@ echo ""
 echo "You should have received a copy of the GNU General Public License"
 echo "along with this program.  If not, see <http://www.gnu.org/licenses/>"
 echo ""
-echo "Do you Agree to the GNU License and to the warrenty?"
+echo "Do you Agree to the GNU License and the warrenty?"
 echo "y=YES n=NO"
 }
 while [ 1 ]
 do disclaimer
+	read CHOICE
+	case "$CHOICE" in
+		"y")
+			break
+		;;
+		"n")
+			echo "Installation Complete without the init scripts installed."
+			exit
+		;; 
+	esac
+done
+
+begininstall ()
+{
+clear
+echo "Are you sure you want to run PVRinstall, which will install SABnzbd+, SickBeard, CouchPotato and Headphones?"
+echo "y=YES n=NO"
+}
+while [ 1 ]
+do begininstall
 	read CHOICE
 	case "$CHOICE" in
 		"y")
@@ -84,7 +104,7 @@ do disclaimer
 			break
 		;;
 		"n")
-			echo "Installation abouted, nothing has been install."
+			echo "Installation aborted, nothing has been installed or changed."
 			exit
 		;; 
 	esac
@@ -93,7 +113,7 @@ done
 initinstall ()
 {
 clear
-echo "Would you like the init scripts to be installed?"
+echo "Would you like the init scripts to be installed and configured as services?"
 echo "y=YES n=NO"
 }
 while [ 1 ]
@@ -113,18 +133,18 @@ done
 initconfig ()
 {
 clear
-echo "Which username do you want each new service to run with?"
+echo "Which username do you want the new init scripts to run with?"
 }
 while [ 1 ]
 do initconfig
 	read USRNAME
-	echo "Configuring specified username."
+	echo "Configuring specified username in each new init script."
 	sleep 2
 	sed -i -e "s/USER=/USER=$USRNAME/g" /etc/default/sabnzbdplus
 	sed -i -e "s/CHANGEME/$USRNAME/g" /opt/pvrinitscripts/SickBeard.sh
 	sed -i -e "s/CHANGEME/$USRNAME/g" /opt/pvrinitscripts/CouchPotato.sh
 	sed -i -e "s/CHANGEME/$USRNAME/g" /opt/pvrinitscripts/Headphones.sh
-	echo "Copying configured init scripts to /etc/init.d/."
+	echo "Copying new configured init scripts to /etc/init.d/."
 	sleep 2
 	cp /opt/pvrinitscripts/SickBeard.sh /etc/init.d/sickbeard
 	cp /opt/pvrinitscripts/CouchPotato.sh /etc/init.d/couchpotato
@@ -140,6 +160,29 @@ do initconfig
 	update-rc.d couchpotato defaults
 	update-rc.d headphones defaults
 	break
+done	
+
+sabdefconf ()
+{
+clear
+echo "Configure SABnzbd+, so the service can be accessible from the network?"
+echo "y=YES n=NO"
+}
+while [ 1 ]
+do sabdefconf
+	read CHOICE
+	case "$CHOICE" in
+		"y")
+			echo "Configuring SABnzbd+ service."
+			sed -i -e "s/HOST=/HOST=0.0.0.0/g" /etc/default/sabnzbdplus
+			sed -i -e "s/PORT=/PORT=8090/g" /etc/default/sabnzbdplus
+			break
+		;;
+		"n")
+			echo "SABnzbd+ will start but will be only accessible from the localhost."
+			exit
+		;; 
+	esac
 done	
 
 startservices ()
@@ -170,5 +213,14 @@ do startservices
 done
 
 clear
-echo "Installation Complete."
+echo "****INSTALLATION COMPLETE****"
+echo ""
+echo "REMEMBER: You still need to configure each program with your own personal settings."
+echo "To do that, browse to the URLs listed below."
+echo ""
+echo "Network accessible URLS"
+echo "SABnzbd+ - http://servername:8090/"
+echo "SickBeard - http://servername:8081/"
+echo "CouchPotato - http://servername:5050/"
+echo "Headphones - http://servername:8181/"
 exit 100
