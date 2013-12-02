@@ -146,7 +146,7 @@ do initconfig
     sed -i -e "s/CHANGEME/$USRNAME/g" /opt/pvrinitscripts/Headphones.sh
     echo "Copying new configured init scripts to /etc/init.d/."
     sleep 2
-    cp /opt/pvrinitscripts/SickBeard.sh /etc/init.d/sickbeardhttp://opensourcehacker.com/2012/05/13/never-use-hard-tabs/
+    cp /opt/pvrinitscripts/SickBeard.sh /etc/init.d/sickbeard
     cp /opt/pvrinitscripts/CouchPotato.sh /etc/init.d/couchpotato
     cp /opt/pvrinitscripts/Headphones.sh /etc/init.d/headphones
     echo "Making the new init scripts executable."
