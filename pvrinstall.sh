@@ -61,9 +61,7 @@ do begininstall
             apt-get update -q=2
             echo "Installing dependencies."
             sleep 2
-            apt-get install -y -q=2 openssh-server
             apt-get install -y -q=2 ntp
-            apt-get install -y -q=2 apache2
             apt-get install -y -q=2 git
             apt-get install -y -q=2 git-core
             apt-get install -y -q=2 python
@@ -75,11 +73,11 @@ do begininstall
             apt-get install -y -q=2 python-support
             apt-get install -y -q=2 python-yenc
             apt-get install -y -q=2 python-notify
-            apt-get install -y -q=2 par2
+			apt-get install -y -q=2 python-software-properties
+			apt-get install -y -q=2 software-properties-common
+			apt-get install -y -q=2 par2
             apt-get install -y -q=2 unrar
             apt-get install -y -q=2 unzip
-            apt-get install -y -q=2 sabnzbdplus
-            apt-get install -y -q=2 sabnzbdplus-theme-mobile
             echo "Creating install locations"
             sleep 2
             mkdir -p /opt/pvrinitscripts
@@ -92,6 +90,12 @@ do begininstall
             git clone git://github.com/midgetspy/Sick-Beard.git /opt/sickbeard
             git clone git://github.com/RuudBurger/CouchPotatoServer.git /opt/couchpotato
             git clone git://github.com/rembo10/headphones.git /opt/headphones
+            echo "Adding and installing SABnzbd+ from PPA"
+            sleep 2
+			add-apt-repository ppa:jcfp/ppa
+            apt-get update -q=2
+			apt-get install -y -q=2 sabnzbdplus
+            apt-get install -y -q=2 sabnzbdplus-theme-mobile
             echo "Setting permissions."
             sleep 2
             chmod 777 -R /opt/pvrinitscripts
